@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class LinkedList {
@@ -13,6 +14,30 @@ public class LinkedList {
 
   private Node first;
   private Node last;
+
+  private Node getPrevious(Node node) {
+    var current = first;
+    while (current != null) {
+      if (current.next == node) {
+        return current;
+      }
+
+      current = current.next;
+    }
+
+    return null;
+  }
+
+  public String toString() {
+    var array = new ArrayList<>();
+    var current = first;
+    while (current != null) {
+      array.add(current.value);
+      current = current.next;
+    }
+
+    return array.toString();
+  }
 
   public boolean isEmpty() {
     return first == null;
@@ -78,11 +103,17 @@ public class LinkedList {
     first = second;
   }
 
-  public void print() {
-    var current = first;
-    while (current != null) {
-      System.out.println(current.value);
-      current = current.next;
+  public void deleteLast() {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
     }
+
+    if (first == last) {
+      first = last = null;
+      return;
+    }
+
+    last = getPrevious(last);
+    last.next = null;
   }
 }

@@ -1,4 +1,3 @@
-
 public class Main {
   public static void main(String[] args) {
     var list = new LinkedList();
@@ -10,8 +9,8 @@ public class Main {
     System.out.println(list.indexOf(10));
     System.out.println(list.contains(20));
 
-    list.deleteFirst();
+    list.deleteLast();
 
-    list.print();
+    System.out.println(list.toString());
   }
 }
