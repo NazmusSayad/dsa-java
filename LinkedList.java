@@ -14,6 +14,7 @@ public class LinkedList {
 
   private Node first;
   private Node last;
+  private int size = 0;
 
   private Node getPrevious(Node node) {
     var current = first;
@@ -39,8 +40,24 @@ public class LinkedList {
     return array.toString();
   }
 
+  public int[] toArray() {
+    int[] array = new int[size];
+    var current = first;
+    var i = 0;
+    while (current != null) {
+      array[i++] = current.value;
+      current = current.next;
+    }
+    
+    return array;
+  }
+
   public boolean isEmpty() {
     return first == null;
+  }
+
+  public int size() {
+    return size;
   }
 
   public void addLast(int value) {
@@ -53,6 +70,8 @@ public class LinkedList {
       last.next = node;
       last = node;
     }
+
+    size++;
   }
 
   public void addFirst(int value) {
@@ -65,6 +84,39 @@ public class LinkedList {
       node.next = first;
       first = node;
     }
+
+    size++;
+  }
+
+  public void deleteFirst() {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    }
+
+    if (first == last) {
+      first = last = null;
+    } else {
+      var second = first.next;
+      first.next = null;
+      first = second;
+    }
+
+    size--;
+  }
+
+  public void deleteLast() {
+    if (isEmpty()) {
+      throw new NoSuchElementException();
+    }
+
+    if (first == last) {
+      first = last = null;
+    } else {
+      last = getPrevious(last);
+      last.next = null;
+    }
+
+    size--;
   }
 
   public int indexOf(int value) {
@@ -86,34 +138,5 @@ public class LinkedList {
   public boolean contains(int value) {
     int index = indexOf(value);
     return index != -1;
-  }
-
-  public void deleteFirst() {
-    if (isEmpty()) {
-      throw new NoSuchElementException();
-    }
-
-    if (first == last) {
-      first = last = null;
-      return;
-    }
-
-    var second = first.next;
-    first.next = null;
-    first = second;
-  }
-
-  public void deleteLast() {
-    if (isEmpty()) {
-      throw new NoSuchElementException();
-    }
-
-    if (first == last) {
-      first = last = null;
-      return;
-    }
-
-    last = getPrevious(last);
-    last.next = null;
   }
 }
